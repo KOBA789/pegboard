@@ -124,22 +124,26 @@ def press_fit_peg(
     length: float = 5.0,
     slot: float = 1.2,
     chamfer: float = 0.8,
+    flex: str = "x",
     flat_width: float | None = None,
     embed: float = 1.0,
 ) -> Part:
     """Straight slotted peg, slightly larger than the hole, for a light press fit. It keeps the
     part from rattling or lifting off its hooks.
 
-    Round (flat_width=None): the slot is in the y-z plane and the halves flex in x; print it
-    upright (axis along z). With flats only the top and bottom arcs touch the hole, so the slot
-    is in the x-z plane and the halves flex in y, in the layer plane of a part printed on its
-    side."""
+    flex is the direction the two halves bend: "x" puts the slot in the y-z plane (the HUB75
+    rails, printed with the peg upright), "y" puts it in the x-z plane, which keeps the slot walls
+    vertical on a part printed lying on its side. Across the slot the peg is rigid, so the fit
+    there is the plain interference of d in the hole. With flats only the top and bottom arcs
+    touch the hole, so flex must be "y"."""
+    if flat_width is not None and flex != "y":
+        raise ValueError("a peg with flats only touches the hole at top and bottom: use flex='y'")
     peg = straight_peg(
         board, rod_d=d, length=length, chamfer=chamfer, flat_width=flat_width, embed=embed
     )
-    if flat_width is None:
+    if flex == "x":
         size, corner = (slot, d + 2), (-slot / 2, -d / 2 - 1)
     else:
-        size, corner = (flat_width + 2, slot), (-flat_width / 2 - 1, -slot / 2)
+        size, corner = (d + 2, slot), (-d / 2 - 1, -slot / 2)
     cut = Solid.make_box(*size, length + 1, Plane.XY.offset(-(length + 1)))
     return peg - Pos(*corner, 0) * cut

@@ -37,3 +37,4 @@ extend-immutable-calls = ["pegboard.mount.HookSpec", "pegboard.HookSpec", "HookS
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]  # import hooks.<name>.<module>

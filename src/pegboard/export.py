@@ -17,10 +17,13 @@ def on_bed(part: Part) -> Part:
     return Pos(-bb.center().X, -bb.center().Y, -bb.min.Z) * part
 
 
-def lay_on_side(part: Part, *, face: str) -> Part:
-    """Rotate so the part's -x or +x face lies on the bed, then place it with on_bed()."""
-    angle = {"-x": -90, "+x": 90}[face]
-    return on_bed(part.rotate(Axis.Y, angle))
+def lay_on_side(part: Part, *, face: str, diagonal: bool = False) -> Part:
+    """Rotate so the part's -x or +x face lies on the bed, then place it with on_bed().
+    diagonal turns it 45 deg on the bed, for long parts that only fit across the diagonal."""
+    part = part.rotate(Axis.Y, {"-x": -90, "+x": 90}[face])
+    if diagonal:
+        part = part.rotate(Axis.Z, 45)
+    return on_bed(part)
 
 
 def fits_bed(part: Shape, margin: float = 5.0) -> bool:

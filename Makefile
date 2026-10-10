@@ -1,12 +1,12 @@
-HOOKS := $(wildcard hooks/*/build.py)
+# Each hooks/<name>/ is a package whose build.py writes its STEP / STL into hooks/<name>/output/
+HOOKS := $(patsubst %/build.py,%,$(wildcard hooks/*/build.py))
 
 .PHONY: all test lint $(HOOKS)
 
-# Regenerate every hook's STEP / STL into hooks/<name>/output/
 all: $(HOOKS)
 
 $(HOOKS):
-	uv run $@
+	uv run python -m $(subst /,.,$@).build
 
 test:
 	uv run pytest
