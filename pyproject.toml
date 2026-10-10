@@ -1,0 +1,39 @@
+[project]
+name = "pegboard"
+version = "0.1.0"
+description = "3D-printed hooks for the Nitori N-Polda pegboard"
+readme = "README.md"
+authors = [
+    { name = "Hidekazu Kobayashi", email = "kobahide789@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "build123d>=0.13.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.10.12,<0.11.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "numpy>=2.5.3",
+    "pytest>=9.1.1",
+    "ruff>=0.17.0",
+    "scipy>=1.18.1",
+]
+
+[tool.ruff]
+line-length = 100
+# verbatim copy from the earlier HUB75 rail project, kept in its original dense style
+extend-exclude = ["tools/insertion_sim.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.flake8-bugbear]
+# frozen dataclass, safe as a default argument
+extend-immutable-calls = ["pegboard.mount.HookSpec", "pegboard.HookSpec", "HookSpec"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
