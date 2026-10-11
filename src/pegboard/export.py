@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from build123d import Axis, Part, Pos, Shape, export_step, export_stl
+from build123d import Axis, Location, Part, Pos, Shape, export_step, export_stl
 
 # Bambu Lab A1 mini build volume (mm).
 BED = (180.0, 180.0, 180.0)
@@ -24,6 +24,12 @@ def lay_on_side(part: Part, *, face: str, diagonal: bool = False) -> Part:
     if diagonal:
         part = part.rotate(Axis.Z, 45)
     return on_bed(part)
+
+
+def on_face(part: Part, bed: Location) -> Part:
+    """Turn the part so its face on the x-y plane of bed (with +z pointing into the part) lies on
+    the print bed, then place it with on_bed()."""
+    return on_bed(bed.inverse() * part)
 
 
 def fits_bed(part: Shape, margin: float = 5.0) -> bool:

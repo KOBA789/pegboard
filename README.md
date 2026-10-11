@@ -9,6 +9,7 @@
 | フック | 用途 | 出力 |
 |---|---|---|
 | [trackpoint_keyboard](hooks/trackpoint_keyboard/) | ThinkPad TrackPoint Keyboard II を掛ける。縦置き（A）と棚置き（B） | `cradle.stl` ×2 または `shelf.stl` ×2 |
+| [switchbot_meter](hooks/switchbot_meter/) | SwitchBot 温湿度計を立てて入れるポケット | `pocket.stl` ×1 |
 
 ## 使い方
 

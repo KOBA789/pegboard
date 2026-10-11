@@ -9,6 +9,7 @@ from build123d import (
     Cylinder,
     Face,
     Kind,
+    Location,
     Part,
     Plane,
     Polygon,
@@ -39,13 +40,49 @@ def soft_extrude(
       * at x = x0, the face on the print bed, where the rounding starts at BED_ANGLE_DEG.
     crown_r rounds the two top corners seen from the front (x-y view).
     """
-    bed_cut = r * (1 - math.cos(math.radians(BED_ANGLE_DEG)))
     core = Plane.YZ * offset(profile, -r)  # Plane.YZ maps local (u, v) to global (y, z)
-    core = Pos(x0 - bed_cut + r, 0, 0) * extrude(core, width + bed_cut - 2 * r)
+    core = Pos(x0 - bed_cut(r) + r, 0, 0) * extrude(core, width + bed_cut(r) - 2 * r)
     if crown_r is not None:
         core &= crown_prism(core.bounding_box(), crown_r - r)
     body = offset(core, r, kind=Kind.ARC)
     return body & Pos(x0, -500, 0) * Box(1000, 1000, 1000, align=Align.MIN)
+
+
+def bed_cut(r: float) -> float:
+    """How far a face rounded by r has to be cut flat for its rounding to start at BED_ANGLE_DEG."""
+    return r * (1 - math.cos(math.radians(BED_ANGLE_DEG)))
+
+
+def soft_fillet(part: Part, *, bed: Location, r: float) -> Part:
+    """Round every convex edge of part by r, except those on the board face (z = 0), then cut the
+    print bed face flat so its rounding starts at BED_ANGLE_DEG.
+
+    bed is the print bed face: its x-y plane, with +z pointing into the part. Build part reaching
+    bed_cut(r) beyond it. For bodies that are not one extruded profile (pockets with side walls),
+    where the 3D offset of soft_extrude crashes on the concave edges. Concave edges stay sharp.
+    Plain fillets fail where two of them would meet, so keep walls thicker than 2 r.
+    """
+    edges = [
+        e
+        for e in part.edges()
+        if not (abs(e.bounding_box().min.Z) < 1e-6 and abs(e.bounding_box().max.Z) < 1e-6)
+        and _is_convex(part, e)
+    ]
+    body = fillet(edges, r)
+    return body & bed * Box(1000, 1000, 1000, align=(Align.CENTER, Align.CENTER, Align.MIN))
+
+
+def _is_convex(part: Part, edge) -> bool:
+    faces = [f for f in part.faces() if any(e.is_same(edge) for e in f.edges())]
+    if len(faces) != 2:
+        return False
+    p = edge.position_at(0.5)
+    n1, n2 = faces[0].normal_at(p), faces[1].normal_at(p)
+    if (n1 - n2).length < 1e-6:  # tangent faces, nothing to round
+        return False
+    # n1 - n2 is perpendicular to the bisector of the normals. The line through the edge along it
+    # only touches the material at a convex edge, and runs inside it at a concave one.
+    return not part.is_inside(p + (n1 - n2).normalized() * 0.05)
 
 
 def crown_prism(bb, radius: float) -> Part:
