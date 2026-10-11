@@ -10,6 +10,8 @@
 |---|---|---|
 | [trackpoint_keyboard](hooks/trackpoint_keyboard/) | ThinkPad TrackPoint Keyboard II を掛ける。縦置き（A）と棚置き（B） | `cradle.stl` ×2 または `shelf.stl` ×2 |
 | [switchbot_meter](hooks/switchbot_meter/) | SwitchBot 温湿度計を立てて入れるポケット | `pocket.stl` ×1 |
+| [ipad_pro_11](hooks/ipad_pro_11/) | iPad Pro 11（M1）を横向きでボードの近くに置き、右から抜き差しする。USB-C は右に出る | `stop.stl` ×1、`rail.stl` ×数個 |
+| [plate](hooks/plate/) | ボードと支柱の間に挟むスペーサー板（デスクライトのクランプ用）。ボス 2 個で穴に位置決め | `plate.stl` ×1 |
 
 ## 使い方
 

@@ -26,6 +26,14 @@ SwitchBot Meter pocket (plate and wall tops level, 6 above the rod centre, peg 1
 body is taken as a solid 35 mm deep block, which only leaves out the opening at the top):
     uv run python tools/insertion_sim.py \
       '{"kind":"arc","r":2.5,"a":2.388,"R":8,"sweep":60,"t":5.5,"hr":3.0,"y_top":6,"y_bot":-31,"P":35,"pitch":25,"peg_y":-24.5,"peg_len":5.5,"dxy":0.1,"th_min":-70,"tx_min":-16,"ty_max":5}'
+
+iPad Pro 11 holder, stop (plate top 6 above the rod centre, peg 3 pitches below, 12.6 deep):
+    uv run python tools/insertion_sim.py \
+      '{"kind":"arc","r":2.5,"a":2.388,"R":8,"sweep":60,"t":5.5,"hr":3.0,"y_top":6,"y_bot":-108.5,"P":12.6,"pitch":25,"peg_y":-74.5,"peg_len":5.5,"dxy":0.1,"th_min":-70,"tx_min":-16,"ty_max":5}'
+
+iPad Pro 11 holder, rail (peg 1 pitch below):
+    uv run python tools/insertion_sim.py \
+      '{"kind":"arc","r":2.5,"a":2.388,"R":8,"sweep":60,"t":5.5,"hr":3.0,"y_top":6,"y_bot":-33.5,"P":12.6,"pitch":25,"peg_y":-24.5,"peg_len":5.5,"dxy":0.1,"th_min":-70,"tx_min":-16,"ty_max":5}'
 """
 import numpy as np, sys, itertools
 from scipy import ndimage
