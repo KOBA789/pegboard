@@ -3,9 +3,10 @@
     uv run python -m hooks.trackpoint_keyboard.build
 
 Two identical cantilever brackets, 7 pitches apart, carry the keyboard flat on their top edges
-with its rear edge at the board. Modelled on the Oculus controller hook: a deep root that hangs
-from a bent hook at the top and bears on the board at the bottom, tapering towards the tip, with
-an upturned lip at the front. A slotted press-fit peg 1 pitch below the hook keeps the bracket
+with its rear edge at the board. Modelled on the Oculus controller hook
+(https://makerworld.com/en/models/14175-pegboard-mounts-for-oculus-meta-quest-2): a deep root that
+hangs from a bent hook at the top and bears on the board at the bottom, tapering towards the tip,
+with an upturned lip at the front. A slotted press-fit peg 1 pitch below the hook keeps the bracket
 from lifting off when the keyboard is picked up.
 
 The arm's underside is a concave sweep, depth(z) = tip_t + (arm_root - tip_t) *

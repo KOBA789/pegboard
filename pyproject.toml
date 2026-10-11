@@ -3,6 +3,8 @@ name = "pegboard"
 version = "0.1.0"
 description = "3D-printed hooks for the Nitori N-Polda pegboard"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     { name = "Hidekazu Kobayashi", email = "kobahide789@gmail.com" }
 ]

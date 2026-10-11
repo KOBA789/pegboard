@@ -62,7 +62,7 @@ Lenovo 公式（[ACC500164 製品の概要](https://pcsupport.lenovo.com/tg/ja/a
 
 ## B. 棚置き（`shelf.py`）
 
-Oculus コントローラ用フック（`~/Downloads/Oculus Hook.stl`、実際に使っていて安定しているもの）の構造にならった片持ちブラケット。
+Oculus コントローラ用のペグボードフック（[Pegboard Mounts for Oculus / Meta Quest 2](https://makerworld.com/en/models/14175-pegboard-mounts-for-oculus-meta-quest-2)。同じボードで実際に使っていて安定しているもの）の構造にならった片持ちブラケット。形状はコピーしておらず、構成だけを参考にした。
 
 - 根元を深くし、上端のフックで引っ張りを受け、下端でボードを押す。
 - ボードに沿って足を下へ伸ばし、腕の下面とは凹 R でつなぐ。
